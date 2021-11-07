@@ -1,0 +1,75 @@
+extends base.pug
+
+block title 
+    title Categorias
+
+block container 
+    .agregar
+        form(action="/categoria" method="post").container
+            .form-group.mb-3.row
+                h1(style='font-weight: bold;').mt-3 Registrar Categoria
+                hr
+                .form-group.mb-3.col-4
+                    .form-group.mb-3
+                        label(for="categoria") Nombre
+                        input#categoria.form-control(type="text" name="categoria" required="required")
+                    .form-group.mb-3
+                        label(for="descripcionCategoria") Descripción
+                        input#descripcionCategoria.form-control(type="text" name="descripcionCategoria" required="required")
+                    button.btn.btn-success(type='submit') Registrar
+                    a.m-2.btn.btn-primary(href="/") Ir a Productos
+                .form-group.mb-3.col-8 
+                    table.table.table-striped.table-hover
+                        thead
+                            tr
+                            th(scope='col') #
+                            th(scope='col') Nombre
+                            th(scope='col') Descripción
+                            th(scope='col') Opciones
+                        tbody.tbody-info 
+                            if (datos)
+                                each c in datos
+                                    tr
+                                        td #{c.idCategoria}
+                                        td #{c.categoria}
+                                        td #{c.descripcionCategoria}
+                                        td
+                                            a.m-2.btn.btn-md.btn-success(href="javascript:editar(" + "'" + c.idCategoria + "'" + "," + "'" + c.categoria + "'" + "," + "'" + c.descripcionCategoria + "'" + ")") Editar
+                                            a.btn.btn-md.btn-danger.ml-2(href=`/eliminarCategoria/` + c.idCategoria) Eliminar
+    .editar
+        form#form-categoria.needs-validation(action="" method="post").container
+            .form-group.mb-3.row
+                h1(style='font-weight: bold;').mt-3 Editar Categoria
+                hr
+                .form-group.mb-3.col-4
+                    input#idCategoria.form-control.disable(type="text" Disabled name="id" required="required")
+                    .form-group.mb-3
+                        label(for="categoria") Nombre
+                        input#categoriaM.form-control.disable(type="text" name="categoria" required="required")
+                    .form-group.mb-3
+                        label(for="descripcionCategoria") Descripción
+                        input#descripcionM.form-control.disable(type="text" name="descripcionCategoria" required="required")
+                    button.btn.btn-success(type='submit') Actualizar
+                    a.m-2.btn.btn-danger(href="/categoria") Cancelar
+                .form-group.mb-3.col-8 
+                    table.table.table-striped.table-hover
+                        thead
+                            tr
+                            th(scope='col') #
+                            th(scope='col') Nombre
+                            th(scope='col') Descripción
+                            th(scope='col') Opciones
+                        tbody.tbody-info 
+                            if (datos)
+                                each c in datos
+                                    tr
+                                        td #{c.idCategoria}
+                                        td #{c.categoria}
+                                        td #{c.descripcionCategoria}
+                                        td
+                                            a.m-2.btn.btn-md.btn-success(href="javascript:editar(" + "'" + c.idCategoria + "'" + "," + "'" + c.categoria + "'" + "," + "'" + c.descripcionCategoria + "'" + ")") Editar
+                                            a.btn.btn-md.btn-danger.ml-2(href=`/eliminarCategoria/` + c.idCategoria) Eliminar
+
+
+block script 
+    script(src="./js/categoria.js")

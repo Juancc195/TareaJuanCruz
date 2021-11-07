@@ -1,0 +1,110 @@
+extends base.pug
+
+block title 
+    title Productos
+block container 
+    .agregar
+        form(action="/" method="post").container
+            .form-group.mb-3.row
+                h1(style='font-weight: bold;').mt-3 Registrar Productos
+                hr
+                .form-group.mb-3.col-4
+                    .form-group.mb-3
+                        label(for="producto") Nombre Producto
+                        input#producto.form-control(type="text" name="producto" required="required")
+                    .form-group.mb-3
+                        label(for="cantidad") Cantidad
+                        input#cantidad.form-control(type="number" name="cantidad" required="required")
+                    .form-group.mb-3
+                        label(for="precio") Precio
+                        input#precio.form-control(type="number" name="precio" required="required")
+                    .form-group.mb-3
+                        label(for="descripcion") Descripción
+                        input#descripcion.form-control(type="text" name="descripcion" required="required")
+                    .form-group.mb-3
+                        label(for="idCategoria") Categoria
+                        select#idCategoria.select.form-control.input-lg(name='idCategoria' required="Ingrese")
+                            if(datos)
+                                each d in datosC
+                                    option(value=d.idCategoria) #{d.categoria}
+                    .form-group.mb-3
+                        button.btn.btn-success(type='submit') Registrar
+                        a.m-2.btn.btn-primary(href="/categoria") Ir a Categoria
+                .form-group.mb-3.col-8 
+                    table.table.table-striped.table-hover
+                        thead
+                            tr
+                            th(scope='col') #
+                            th(scope='col') Productos
+                            th(scope='col') Cantidad
+                            th(scope='col') Precio
+                            th(scope='col') Descripcion
+                            th(scope='col') Categoria
+                            th(scope='col') Opciones
+                        tbody.tbody-info 
+                            if (datos)
+                                each c in datos, datosC
+                                    tr
+                                        td #{c.idProducto}
+                                        td #{c.producto}
+                                        td #{c.cantidad}
+                                        td L.#{c.precio}
+                                        td #{c.descripcion}
+                                        td #{c.categoria}
+                                        td
+                                            a.btn.btn-md.btn-success(href="javascript:editar(" + "'" + c.idProducto + "'" + ","+ "'" + c.producto + "'" + "," + "'" + c.cantidad + "'" + "," + "'" + c.precio + "'" + "," + "'" + c.descripcion + "'" + "," + "'" + c.idCategoria + "'" + ")") Editar
+                                            a.m-2.btn.btn-md.btn-danger.ml-2(href=`/eliminarProducto/` + c.idProducto) Eliminar
+    .editar
+        form#form-producto.needs-validation(action="" method="post").container
+            .form-group.mb-3.row
+                h1(style='font-weight: bold;').mt-3 Editar Productos
+                hr
+                .form-group.mb-3.col-4
+                    input#idProducto.form-control.disable(type="text" Disabled name="id" required="required")
+                    .form-group.mb-3
+                        label(for="producto") Nombre Producto
+                        input#productoM.form-control(type="text" name="producto" required="required")
+                    .form-group.mb-3
+                        label(for="cantidad") Cantidad
+                        input#cantidadM.form-control(type="number" name="cantidad" required="required")
+                    .form-group.mb-3
+                        label(for="precio") Precio
+                        input#precioM.form-control(type="number" name="precio" required="required")
+                    .form-group.mb-3
+                        label(for="descripcion") Descripción
+                        input#descripcionM.form-control(type="text" name="descripcion" required="required")
+                    .form-group.mb-3
+                        label(for="idCategoria") Categoria
+                        select#idCategoriaM.select.form-control.input-lg(name='idCategoria' required="required")
+                            if(datos)
+                                each d in datosC
+                                    option(value=d.idCategoria selected=d.idCategoria) #{d.categoria}
+
+                    button.btn.btn-success(type='submit') Actualizar
+                    a.m-2.btn.btn-danger(href="/") Cancelar
+                .form-group.mb-3.col-8 
+                    table.table.table-striped.table-hover
+                        thead
+                            tr
+                            th(scope='col') #
+                            th(scope='col') Productos
+                            th(scope='col') Cantidad
+                            th(scope='col') Precio
+                            th(scope='col') Descripcion
+                            th(scope='col') Categoria
+                            th(scope='col') Opciones
+                        tbody.tbody-info 
+                            if (datos)
+                                each c in datos
+                                    tr
+                                        td #{c.idProducto}
+                                        td #{c.producto}
+                                        td #{c.cantidad}
+                                        td L.#{c.precio}
+                                        td #{c.descripcion}
+                                        td #{c.categoria}
+                                        td
+                                            a.m-2.btn.btn-md.btn-success(href="javascript:editar(" + "'" + c.idProducto + "'" + ","+ "'" + c.producto + "'" + "," + "'" + c.cantidad + "'" + "," + "'" + c.precio + "'" + "," + "'" + c.descripcion + "'" + "," + "'" + c.idCategoria + "'" + ")") Editar
+                                            a.btn.btn-md.btn-danger.ml-2(href=`/eliminarProducto/` + c.idProducto) Eliminar
+block script 
+    script(src="./js/producto.js")
